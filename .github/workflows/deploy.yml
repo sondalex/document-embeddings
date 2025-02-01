@@ -1,0 +1,31 @@
+name: Vite Github Pages Deploy
+
+on:
+  push:
+    branches: ["master", "main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: gh-pages
+      url: ${{ steps.deploy_to_pages.outputs.github_pages_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      # - uses: oven-sh/setup-bun@v2
+      - name: Deploy to Github Pages
+        uses: sondalex/vite-github-pages-deployer@add_working_directory
+        id: deploy_to_pages
+        with:
+          package_manager: yarn 
+          working-directory: ./example
