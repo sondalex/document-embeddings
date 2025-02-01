@@ -28,4 +28,4 @@ jobs:
         id: deploy_to_pages
         with:
           package_manager: yarn 
-          working-directory: ./example
+          working_path: ./example
